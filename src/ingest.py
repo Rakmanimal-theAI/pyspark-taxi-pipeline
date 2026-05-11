@@ -4,10 +4,17 @@ from pyspark.sql.functions import col, sum, when, count
 '''
 Step 1: Create valid Spark session
 '''
-def get_spark():
-    return SparkSession.builder.appName("Read Parquet").getOrCreate()
+def get_spark(shuffle_partitions):
+    return SparkSession. \
+        builder. \
+        appName("Read Parquet"). \
+        config("spark.sql.shuffle.partitions", shuffle_partitions). \
+        getOrCreate()
 
 def read_parquet(spark, file_path):
+    """Read parquet file(s). file_path can be a string or list of strings."""
+    if isinstance(file_path, list):
+        return spark.read.parquet(*file_path)  # Unpack list as multiple arguments
     return spark.read.parquet(file_path)
 
 if __name__ == "__main__":
