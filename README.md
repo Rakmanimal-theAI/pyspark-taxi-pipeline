@@ -33,6 +33,8 @@ choices. Key findings:
 
 ### Pandas vs Spark
 
+![benchmarks](plots/plot1.png)
+
 | Tool   | 1 month | 3 months | 6 months | 12 months |
 |--------|---------|----------|----------|-----------|
 | Pandas | 1.4s    | 6.0s     | 13.7s    | 29.7s     |
@@ -46,6 +48,8 @@ processes data in partitions so it's not constrained by RAM.
 
 ### Shuffle partition tuning
 
+![benchmarks](plots/plot2.png)
+
 All shuffle partition counts (4–128) produced nearly identical times (~3.2–3.4s).
 This is expected: shuffle partitions matter most during large joins and groupBy
 operations on raw data. Our output DataFrame is small after aggregation, so there's
@@ -53,6 +57,8 @@ little data to shuffle and the setting has minimal effect. On a larger intermedi
 dataset or a multi-table join this would show a meaningful difference.
 
 ### Partition strategy
+
+![benchmarks](plots/plot3.png)
 
 | Strategy      | Write time | Read time (filter hour=8) |
 |---------------|------------|---------------------------|
@@ -67,6 +73,8 @@ directory structure. In a real pipeline the raw-data read would show much larger
 differences between strategies.
 
 ### Repartition on write
+
+![benchmarks](plots/plot4.png)
 
 Write time is flat across repartition counts (3.2–3.7s). The meaningful difference
 is file count: `repartition(1)` produces one large file while `repartition(32)`
