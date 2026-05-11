@@ -7,7 +7,7 @@ Step 6 Write the whole pipeline
 '''
 spark = get_spark()
 
-df = read_parquet(spark, '/Users/nicolasmir/projects/pyspark-taxi-pipeline/data/raw/yellow_tripdata_2026-01.parquet')
+df = read_parquet(spark, 'data/raw/')
 
 df = clean(df)
 
@@ -17,4 +17,4 @@ df = aggregate_by_zone_hour(df)
 
 validate(df)
 
-df.write.partitionBy("pickup_hour").mode("overwrite").parquet("output")
+df.write.partitionBy("year_month", "pickup_hour").mode("overwrite").parquet("output")
