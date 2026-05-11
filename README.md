@@ -18,7 +18,7 @@ by `pickup_hour` means downstream queries only scan the partitions they need.
 [paste the architecture diagram as a PNG, or link to it]
 
 ## Tech stack
-Python 3.11 · PySpark 3.5 · Parquet · Docker (optional) · pytest
+Python · PySpark · Parquet · pytest
 
 ## Running it
 ```bash
